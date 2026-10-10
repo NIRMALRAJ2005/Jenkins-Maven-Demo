@@ -3,31 +3,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Check Java Version') {
             steps {
-                echo 'Source code is available in the workspace'
+                bat 'where java'
+                bat 'java -version'
+                bat 'where javac'
+                bat 'javac -version'
+                bat 'mvn -version'
             }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'mvn clean package'
-            }
-        }
-
-        stage('Run Java Program') {
-            steps {
-                bat 'java -cp target\\jenkins-maven-demo-1.0-SNAPSHOT.jar com.example.App'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'BUILD SUCCESS!'
-        }
-        failure {
-            echo 'BUILD FAILED. Check the Console Output.'
         }
     }
 }
